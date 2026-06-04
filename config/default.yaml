@@ -1,0 +1,35 @@
+topic:
+  mode: trending
+  manualTopic: ""
+  hybridPrefer: trending
+  sources:
+    - x
+    - google
+  woeid: 23424977
+  xSearch:
+    # min_faves and lang: are NOT valid in API v2 — use minLikes + langFilter instead
+    query: "(AI OR tech OR science OR news)"
+    maxResults: 100
+    minLikes: 50
+    langFilter: true
+  filter:
+    includeKeywords: []
+    excludeKeywords:
+      - politics
+      - celebrity
+    maxHashtagsFromTrend: 2
+  fallbackTopics:
+    - artificial intelligence
+    - space exploration
+    - neuroscience
+    - climate science
+    - ancient history
+schedule:
+  timezone: America/New_York
+  preferredHourLocal: 9
+content:
+  drafts: 5
+  style: "surprising one-line fact, no question mark, no emojis"
+posting:
+  allowUrls: false
+  dryRun: false
