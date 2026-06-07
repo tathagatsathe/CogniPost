@@ -28,13 +28,24 @@ function selectFromPool(
   seed: string
 ): TrendCandidate | undefined {
   const filtered = filterTrends(pool, config);
-  const chosen = filtered.length > 0 ? filtered : pool;
-
-  if (filtered.length === 0 && pool.length > 0) {
-    log("warn", "No topics matched filters; using unfiltered pool");
+  if (filtered.length > 0) {
+    return pickDeterministic(filtered, seed);
   }
 
-  return pickDeterministic(chosen, seed);
+  const hasFilters =
+    config.topic.filter.includeKeywords.length > 0 ||
+    config.topic.filter.excludeKeywords.length > 0;
+
+  if (pool.length > 0 && hasFilters) {
+    log("warn", "No topics matched filters; using fallbackTopics", {
+      poolSize: pool.length,
+      includeKeywords: config.topic.filter.includeKeywords,
+      excludeKeywords: config.topic.filter.excludeKeywords,
+    });
+    return undefined;
+  }
+
+  return pickDeterministic(pool, seed);
 }
 
 export async function discoverTopic(
